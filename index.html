@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>william · nothing</title>
+    <title>william · bright</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* ---------- RESET & BASE ---------- */
@@ -14,8 +14,8 @@
         }
 
         body {
-            background: #f5f5f7;
-            color: #1c1c1e;
+            background: #ffffff;
+            color: #1a1a1a;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-weight: 300;
             padding: 28px 24px;
@@ -30,15 +30,13 @@
             margin: 0 auto;
         }
 
-        /* ---------- GLASS MIXIN (light version) ---------- */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 0, 0, 0.06);
+        /* ---------- CARDS (light & crisp) ---------- */
+        .card {
+            background: #ffffff;
+            border: 1px solid #eaeef2;
             border-radius: 24px;
             padding: 20px 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
 
         /* ---------- HEADER ---------- */
@@ -50,7 +48,7 @@
             gap: 16px;
             margin-bottom: 32px;
             padding-bottom: 16px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            border-bottom: 1px solid #eaeef2;
         }
 
         .header-left {
@@ -63,12 +61,12 @@
             font-weight: 300;
             font-size: 2rem;
             letter-spacing: -0.02em;
-            color: #1c1c1e;
+            color: #1a1a1a;
         }
 
         .header-left h1 span {
             font-weight: 500;
-            color: #d96c6c; /* soft coral */
+            color: #4a90d9; /* soft blue */
         }
 
         .header-left .live {
@@ -84,7 +82,7 @@
         .header-left .live .dot {
             width: 8px;
             height: 8px;
-            background: #d96c6c;
+            background: #4a90d9;
             border-radius: 50%;
             animation: pulse 1.8s ease-in-out infinite;
         }
@@ -108,7 +106,7 @@
 
         .btn-refresh {
             background: transparent;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid #d0d7dd;
             color: #444;
             padding: 6px 16px;
             border-radius: 40px;
@@ -119,30 +117,29 @@
         }
 
         .btn-refresh:hover {
-            background: rgba(0, 0, 0, 0.04);
-            border-color: rgba(0, 0, 0, 0.2);
+            background: #f5f7fa;
+            border-color: #b0b8c0;
         }
 
         /* ---------- INSIGHTS BANNER ---------- */
         .insights {
-            background: rgba(255, 255, 255, 0.5);
-            border-left: 2px solid #d96c6c;
+            background: #f8faff;
+            border-left: 3px solid #4a90d9;
             padding: 14px 22px;
             border-radius: 16px;
             margin-bottom: 30px;
             font-size: 0.9rem;
-            color: #555;
+            color: #444;
             line-height: 1.6;
-            backdrop-filter: blur(4px);
         }
 
         .insights strong {
-            color: #1c1c1e;
+            color: #1a1a1a;
             font-weight: 400;
         }
 
         .insights .highlight {
-            color: #d96c6c;
+            color: #4a90d9;
             font-weight: 400;
         }
 
@@ -155,29 +152,29 @@
         }
 
         .kpi-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            background: #ffffff;
+            border: 1px solid #eaeef2;
             border-radius: 20px;
             padding: 18px 16px 14px;
             transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .kpi-card:hover {
-            background: rgba(255, 255, 255, 0.9);
+            border-color: #c0cbd6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
 
         .kpi-card .value {
             font-size: 2rem;
             font-weight: 300;
             letter-spacing: -0.02em;
-            color: #1c1c1e;
+            color: #1a1a1a;
             line-height: 1.2;
         }
 
         .kpi-card .value .accent {
-            color: #d96c6c;
+            color: #4a90d9;
         }
 
         .kpi-card .value .muted {
@@ -198,7 +195,7 @@
         }
 
         .trend.up { color: #2e7d32; }
-        .trend.down { color: #d96c6c; }
+        .trend.down { color: #e67e22; } /* soft orange instead of red */
 
         /* ---------- CHART GRID ---------- */
         .chart-grid {
@@ -209,12 +206,11 @@
         }
 
         .chart-card {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            background: #ffffff;
+            border: 1px solid #eaeef2;
             border-radius: 24px;
             padding: 18px 20px 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .chart-card h3 {
@@ -224,7 +220,7 @@
             letter-spacing: 0.04em;
             color: #777;
             margin-bottom: 10px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid #eaeef2;
             padding-bottom: 8px;
         }
 
@@ -235,14 +231,13 @@
 
         /* ---------- TABLE ---------- */
         .table-wrapper {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            background: #ffffff;
+            border: 1px solid #eaeef2;
             border-radius: 24px;
             padding: 18px 20px 14px;
             margin-top: 8px;
             overflow-x: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .table-toolbar {
@@ -254,11 +249,11 @@
         }
 
         .table-toolbar input {
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: #f8fafc;
+            border: 1px solid #d0d7dd;
             border-radius: 40px;
             padding: 8px 18px;
-            color: #1c1c1e;
+            color: #1a1a1a;
             font-size: 0.8rem;
             width: 260px;
             outline: none;
@@ -267,8 +262,9 @@
         }
 
         .table-toolbar input:focus {
-            border-color: rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.8);
+            border-color: #4a90d9;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.1);
         }
 
         .table-toolbar .row-count {
@@ -288,7 +284,7 @@
         th {
             text-align: left;
             padding: 12px 6px 8px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            border-bottom: 1px solid #eaeef2;
             color: #888;
             font-weight: 400;
             text-transform: uppercase;
@@ -298,12 +294,12 @@
 
         td {
             padding: 10px 6px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid #f0f2f5;
             color: #333;
         }
 
         tr:hover td {
-            background: rgba(0, 0, 0, 0.02);
+            background: #f8faff;
         }
 
         .badge {
@@ -317,17 +313,17 @@
         }
 
         .badge-sent {
-            background: rgba(46, 125, 50, 0.12);
+            background: rgba(46, 125, 50, 0.10);
             color: #2e7d32;
         }
 
         .badge-pending {
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(0, 0, 0, 0.04);
             color: #888;
         }
 
         .overdue-row td {
-            border-left: 2px solid #d96c6c;
+            border-left: 3px solid #e67e22; /* soft orange */
         }
 
         .loading,
@@ -339,7 +335,7 @@
         }
 
         .error {
-            color: #d96c6c;
+            color: #e67e22;
         }
 
         /* ---------- RESPONSIVE ---------- */
@@ -403,7 +399,7 @@
     async function fetchData() {
         document.getElementById('tableContainer').innerHTML = '<div class="loading">loading…</div>';
         try {
-            // Use your live backend URL (change if needed)
+            // Use your live backend URL
             const response = await fetch('https://insights.bpoautoaccept.com/api.php');
             if (!response.ok) throw new Error('Network error');
             const result = await response.json();
@@ -441,8 +437,8 @@
         grid.innerHTML = `
             <div class="kpi-card"><div class="value">${s.total}</div><div class="label">total orders</div></div>
             <div class="kpi-card"><div class="value"><span class="accent">${s.mail_sent}</span></div><div class="label">mail sent</div></div>
-            <div class="kpi-card"><div class="value" style="color:#888;">${s.mail_pending}</div><div class="label">mail pending</div></div>
-            <div class="kpi-card"><div class="value" style="color:#d96c6c;">${s.overdue}</div><div class="label">overdue <span class="trend down">(${s.overdue_rate}%)</span></div></div>
+            <div class="kpi-card"><div class="value" style="color:#999;">${s.mail_pending}</div><div class="label">mail pending</div></div>
+            <div class="kpi-card"><div class="value" style="color:#e67e22;">${s.overdue}</div><div class="label">overdue <span class="trend down">(${s.overdue_rate}%)</span></div></div>
             <div class="kpi-card"><div class="value">${s.unique_clients}</div><div class="label">unique clients</div></div>
             <div class="kpi-card"><div class="value">${s.avg_turnaround}</div><div class="label">avg turnaround (days)</div></div>
             <div class="kpi-card"><div class="value">${avgPerDay}</div><div class="label">avg orders / day</div></div>
@@ -495,11 +491,11 @@
     }
     function esc(t) { if (!t) return ''; return String(t).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m]); }
 
-    // ---------- CHARTS (monochrome + soft coral) ----------
+    // ---------- CHARTS (bright with blue accent) ----------
     function renderCharts(stats, data) {
-        const grey = 'rgba(0,0,0,0.08)';
-        const coral = 'rgba(217,108,108,0.5)';
-        const coralBorder = '#d96c6c';
+        const lightGrey = 'rgba(0,0,0,0.06)';
+        const blue = '#4a90d9';
+        const blueLight = 'rgba(74,144,217,0.2)';
 
         // 1. Daily
         const daily = {};
@@ -518,15 +514,15 @@
                 datasets: [{
                     label: 'orders',
                     data: dailyData,
-                    backgroundColor: grey,
-                    borderColor: 'rgba(0,0,0,0.15)',
+                    backgroundColor: lightGrey,
+                    borderColor: '#d0d7dd',
                     borderWidth: 1
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
-        // 2. Monthly
+        // 2. Monthly (blue line)
         const months = Object.keys(stats.monthly || {});
         const monthData = Object.values(stats.monthly || {});
         if (chartInstances.month) chartInstances.month.destroy();
@@ -537,11 +533,11 @@
                 datasets: [{
                     label: 'orders',
                     data: monthData,
-                    borderColor: coralBorder,
+                    borderColor: blue,
                     tension: 0.3,
                     fill: false,
                     pointRadius: 2,
-                    pointBackgroundColor: coralBorder
+                    pointBackgroundColor: blue
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
@@ -563,8 +559,8 @@
                 datasets: [{
                     label: 'orders',
                     data: yearData,
-                    backgroundColor: grey,
-                    borderColor: 'rgba(0,0,0,0.15)',
+                    backgroundColor: lightGrey,
+                    borderColor: '#d0d7dd',
                     borderWidth: 1
                 }]
             },
@@ -582,8 +578,8 @@
                 datasets: [{
                     label: 'orders',
                     data: clientData,
-                    backgroundColor: grey,
-                    borderColor: 'rgba(0,0,0,0.15)',
+                    backgroundColor: lightGrey,
+                    borderColor: '#d0d7dd',
                     borderWidth: 1
                 }]
             },
@@ -606,8 +602,8 @@
                 datasets: [{
                     label: 'orders',
                     data: stateData,
-                    backgroundColor: grey,
-                    borderColor: 'rgba(0,0,0,0.15)',
+                    backgroundColor: lightGrey,
+                    borderColor: '#d0d7dd',
                     borderWidth: 1
                 }]
             },
