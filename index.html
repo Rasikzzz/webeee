@@ -3,25 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>William · Neon Analytics</title>
+    <title>william · nothing</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* ---------- DARK CYAN NEON THEME ---------- */
+        /* ---------- RESET & BASE ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
+
         body {
-            background: #0b0e14;
-            color: #e0e8f0;
-            padding: 24px;
+            background: #0a0a0a;
+            color: #f0f0f0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-weight: 300;
+            padding: 28px 24px;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
         }
+
         .container {
-            max-width: 1440px;
+            max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
+        }
+
+        /* ---------- GLASS MIXIN ---------- */
+        .glass {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 20px 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         /* ---------- HEADER ---------- */
@@ -30,157 +47,186 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.15);
+            gap: 16px;
+            margin-bottom: 32px;
             padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .header h1 {
-            font-size: 2rem;
+
+        .header-left {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+        }
+
+        .header-left h1 {
             font-weight: 300;
-            letter-spacing: -0.5px;
-            color: #c8f0f0;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            font-size: 2rem;
+            letter-spacing: -0.02em;
+            color: #fff;
         }
-        .header h1 span {
-            color: #00ffff;
-            font-weight: 600;
+
+        .header-left h1 span {
+            font-weight: 500;
+            color: #ff3b30;
         }
+
+        .header-left .live {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #888;
+        }
+
+        .header-left .live .dot {
+            width: 8px;
+            height: 8px;
+            background: #ff3b30;
+            border-radius: 50%;
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
         .header-right {
             display: flex;
             align-items: center;
             gap: 18px;
-            font-size: 0.85rem;
-            color: #8aa0b0;
+            font-size: 0.8rem;
+            color: #888;
         }
-        .header-right .live-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background: #00ffff;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #00ffff;
-            margin-right: 6px;
-            animation: pulse 2s infinite;
+
+        .header-right .update-time {
+            color: #666;
         }
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; }
-            100% { opacity: 0.4; }
-        }
+
         .btn-refresh {
             background: transparent;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            color: #00ffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
             padding: 6px 16px;
-            border-radius: 20px;
+            border-radius: 40px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: 0.2s;
-            background: rgba(0, 255, 255, 0.05);
+            font-weight: 400;
         }
+
         .btn-refresh:hover {
-            background: rgba(0, 255, 255, 0.15);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-        }
-        .theme-toggle {
-            background: transparent;
-            border: 1px solid #2a3a4a;
-            color: #8aa0b0;
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         /* ---------- INSIGHTS BANNER ---------- */
         .insights {
-            background: rgba(0, 255, 255, 0.04);
-            border-left: 3px solid #00ffff;
-            padding: 14px 20px;
-            border-radius: 6px;
-            margin-bottom: 28px;
-            color: #b0c8d8;
-            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid #ff3b30;
+            padding: 14px 22px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #aaa;
+            line-height: 1.6;
         }
+
         .insights strong {
-            color: #e0f0f0;
-            font-weight: 500;
+            color: #fff;
+            font-weight: 400;
         }
+
         .insights .highlight {
-            color: #00ffff;
-            font-weight: 500;
+            color: #ff3b30;
+            font-weight: 400;
         }
 
         /* ---------- KPI GRID ---------- */
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 14px;
             margin-bottom: 32px;
         }
+
         .kpi-card {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 16px 14px;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 18px 16px 14px;
             transition: 0.2s;
         }
+
         .kpi-card:hover {
-            border-color: rgba(0, 255, 255, 0.3);
-            background: rgba(0, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.06);
         }
+
         .kpi-card .value {
             font-size: 2rem;
             font-weight: 300;
-            color: #e8f4f4;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.02em;
+            color: #fff;
+            line-height: 1.2;
         }
+
         .kpi-card .value .accent {
-            color: #00ffff;
+            color: #ff3b30;
         }
+
+        .kpi-card .value .muted {
+            color: #666;
+        }
+
         .kpi-card .label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #6a8a9a;
-            margin-top: 4px;
+            letter-spacing: 0.06em;
+            color: #777;
+            margin-top: 6px;
         }
-        .kpi-card .sub {
-            font-size: 0.75rem;
-            color: #4a6a7a;
-            margin-top: 4px;
-        }
+
         .kpi-card .trend {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             margin-left: 4px;
         }
-        .trend.up { color: #00ff88; }
-        .trend.down { color: #ff6b6b; }
+
+        .trend.up { color: #34c759; }
+        .trend.down { color: #ff3b30; }
 
         /* ---------- CHART GRID ---------- */
         .chart-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
             margin-bottom: 32px;
         }
+
         .chart-card {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 18px 16px 10px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 18px 20px 14px;
         }
+
         .chart-card h3 {
-            font-weight: 400;
-            font-size: 0.85rem;
-            color: #8aa0b0;
-            letter-spacing: 0.3px;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.05);
-            padding-bottom: 6px;
+            font-weight: 300;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #777;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding-bottom: 8px;
         }
+
         .chart-card canvas {
             max-height: 180px;
             max-width: 100%;
@@ -189,12 +235,15 @@
         /* ---------- TABLE ---------- */
         .table-wrapper {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 18px 20px 14px;
             margin-top: 8px;
             overflow-x: auto;
         }
+
         .table-toolbar {
             display: flex;
             justify-content: space-between;
@@ -202,79 +251,101 @@
             gap: 12px;
             margin-bottom: 14px;
         }
+
         .table-toolbar input {
             background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 255, 255, 0.15);
-            border-radius: 6px;
-            padding: 8px 14px;
-            color: #e0e8f0;
-            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            padding: 8px 18px;
+            color: #eee;
+            font-size: 0.8rem;
             width: 260px;
             outline: none;
             transition: 0.2s;
+            font-weight: 300;
         }
+
         .table-toolbar input:focus {
-            border-color: #00ffff;
-            box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
         }
+
         .table-toolbar .row-count {
-            color: #6a8a9a;
-            font-size: 0.85rem;
+            color: #666;
+            font-size: 0.75rem;
             align-self: center;
+            letter-spacing: 0.02em;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.8rem;
+            font-weight: 300;
         }
+
         th {
             text-align: left;
-            padding: 10px 6px;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.08);
-            color: #6a8a9a;
+            padding: 12px 6px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #666;
             font-weight: 400;
-            letter-spacing: 0.5px;
             text-transform: uppercase;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
+            letter-spacing: 0.06em;
         }
+
         td {
-            padding: 8px 6px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 10px 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            color: #ccc;
         }
+
         tr:hover td {
-            background: rgba(0, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
         }
+
         .badge {
             display: inline-block;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 0.65rem;
-            font-weight: 500;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
+
         .badge-sent {
-            background: rgba(0, 255, 136, 0.15);
-            color: #00ff88;
+            background: rgba(52, 199, 89, 0.15);
+            color: #34c759;
         }
+
         .badge-pending {
-            background: rgba(255, 200, 0, 0.15);
-            color: #ffcc00;
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
         }
+
         .overdue-row td {
-            border-left: 2px solid #ff6b6b;
+            border-left: 2px solid #ff3b30;
         }
-        .loading, .error {
-            padding: 40px;
-            text-align: center;
-            color: #6a8a9a;
-        }
+
+        .loading,
         .error {
-            color: #ff6b6b;
+            padding: 48px;
+            text-align: center;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .error {
+            color: #ff3b30;
         }
 
         /* ---------- RESPONSIVE ---------- */
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
             .chart-grid { grid-template-columns: 1fr; }
+            body { padding: 16px; }
+            .container { padding: 0; }
         }
     </style>
 </head>
@@ -283,18 +354,19 @@
 
     <!-- HEADER -->
     <div class="header">
-        <h1>⟨ <span>william</span> ⟩</h1>
+        <div class="header-left">
+            <h1>⟨ <span>william</span> ⟩</h1>
+            <span class="live"><span class="dot"></span> live</span>
+        </div>
         <div class="header-right">
-            <span><span class="live-dot"></span> live</span>
-            <span id="lastUpdate" style="color:#6a8a9a;">--</span>
+            <span class="update-time" id="lastUpdate">–</span>
             <button class="btn-refresh" onclick="fetchData()">↻ refresh</button>
-            <button class="theme-toggle" onclick="document.body.style.background = document.body.style.background === '#0b0e14' ? '#1a1f2a' : '#0b0e14';">◐</button>
         </div>
     </div>
 
     <!-- INSIGHTS BANNER -->
     <div class="insights" id="insightsBanner">
-        <span id="insightText">Loading intelligence…</span>
+        <span id="insightText">loading intelligence…</span>
     </div>
 
     <!-- KPI GRID -->
@@ -302,17 +374,17 @@
 
     <!-- CHARTS -->
     <div class="chart-grid">
-        <div class="chart-card"><h3>📈 daily orders (last 30 days)</h3><canvas id="dailyChart"></canvas></div>
-        <div class="chart-card"><h3>📊 monthly trend</h3><canvas id="monthChart"></canvas></div>
-        <div class="chart-card"><h3>📅 yearly overview</h3><canvas id="yearChart"></canvas></div>
-        <div class="chart-card"><h3>🏆 top clients</h3><canvas id="topClientChart"></canvas></div>
-        <div class="chart-card"><h3>📍 state distribution</h3><canvas id="stateChart"></canvas></div>
+        <div class="chart-card"><h3>daily orders · last 30 days</h3><canvas id="dailyChart"></canvas></div>
+        <div class="chart-card"><h3>monthly trend</h3><canvas id="monthChart"></canvas></div>
+        <div class="chart-card"><h3>yearly overview</h3><canvas id="yearChart"></canvas></div>
+        <div class="chart-card"><h3>top clients</h3><canvas id="topClientChart"></canvas></div>
+        <div class="chart-card"><h3>state distribution</h3><canvas id="stateChart"></canvas></div>
     </div>
 
     <!-- TABLE -->
     <div class="table-wrapper">
         <div class="table-toolbar">
-            <input type="text" id="searchInput" placeholder="🔍 search orders, addresses, clients…">
+            <input type="text" id="searchInput" placeholder="search orders, addresses, clients…">
             <span class="row-count" id="rowCount">0 rows</span>
         </div>
         <div id="tableContainer"><div class="loading">loading data…</div></div>
@@ -321,195 +393,242 @@
 </div>
 
 <script>
-// ---------- GLOBALS ----------
-let allData = [];
-let chartInstances = {};
+    // ---------- GLOBALS ----------
+    let allData = [];
+    let chartInstances = {};
 
-// ---------- FETCH ----------
-async function fetchData() {
-    document.getElementById('tableContainer').innerHTML = '<div class="loading">loading…</div>';
-    try {
-        // ===== CHANGE THIS URL IF NEEDED =====
-        // If you host the frontend on the same subdomain, use: 'api.php'
-        // If you host on GitHub Pages, use the full URL:
-        const response = await fetch('https://insights.bpoautoaccept.com/api.php');
-        // =====================================
+    // ---------- FETCH ----------
+    async function fetchData() {
+        document.getElementById('tableContainer').innerHTML = '<div class="loading">loading…</div>';
+        try {
+            // Use your live backend URL (change if needed)
+            const response = await fetch('https://insights.bpoautoaccept.com/api.php');
+            if (!response.ok) throw new Error('Network error');
+            const result = await response.json();
+            if (result.status !== 'success') throw new Error(result.message);
 
-        if (!response.ok) throw new Error('Network error');
-        const result = await response.json();
-        if (result.status !== 'success') throw new Error(result.message);
+            allData = result.data;
+            const stats = result.stats;
 
-        allData = result.data;
-        const stats = result.stats;
-
-        renderKPI(stats);
-        renderInsights(stats);
-        renderTable(allData);
-        renderCharts(stats, allData);
-        document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
-    } catch (err) {
-        document.getElementById('tableContainer').innerHTML = `<div class="error">⚠ ${err.message}</div>`;
-        console.error(err);
-    }
-}
-
-// ---------- KPI ----------
-function renderKPI(s) {
-    // Compute averages from monthly data
-    const months = Object.keys(s.monthly || {});
-    const totalMonths = months.length || 1;
-    const avgPerMonth = (s.total / totalMonths).toFixed(1);
-    const years = new Set(months.map(m => m.split('-')[0]));
-    const avgPerYear = (s.total / (years.size || 1)).toFixed(1);
-    // Average per day: estimate days from first month to now
-    let avgPerDay = '--';
-    if (months.length > 0) {
-        const firstDate = new Date(months[0] + '-01');
-        const days = Math.max(1, (new Date() - firstDate) / (1000*60*60*24));
-        avgPerDay = (s.total / days).toFixed(1);
-    }
-
-    const grid = document.getElementById('kpiGrid');
-    grid.innerHTML = `
-        <div class="kpi-card"><div class="value">${s.total}</div><div class="label">total orders</div></div>
-        <div class="kpi-card"><div class="value"><span class="accent">${s.mail_sent}</span></div><div class="label">mail sent</div></div>
-        <div class="kpi-card"><div class="value" style="color:#ffcc00;">${s.mail_pending}</div><div class="label">mail pending</div></div>
-        <div class="kpi-card"><div class="value" style="color:#ff6b6b;">${s.overdue}</div><div class="label">overdue <span class="trend down">(${s.overdue_rate}%)</span></div></div>
-        <div class="kpi-card"><div class="value">${s.unique_clients}</div><div class="label">unique clients</div></div>
-        <div class="kpi-card"><div class="value">${s.avg_turnaround}</div><div class="label">avg turnaround (days)</div></div>
-        <div class="kpi-card"><div class="value">${avgPerDay}</div><div class="label">avg orders / day</div></div>
-        <div class="kpi-card"><div class="value">${avgPerMonth}</div><div class="label">avg orders / month</div></div>
-        <div class="kpi-card"><div class="value">${avgPerYear}</div><div class="label">avg orders / year</div></div>
-    `;
-}
-
-// ---------- INSIGHTS ----------
-function renderInsights(s) {
-    const el = document.getElementById('insightText');
-    const topClient = Object.keys(s.top_clients || {})[0] || 'N/A';
-    const topPct = s.top_clients?.[topClient] ? Math.round((s.top_clients[topClient] / s.total) * 100) : 0;
-    const dowLabels = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-    const maxVal = Math.max(...(s.day_of_week || [0]));
-    const peakDay = dowLabels[s.day_of_week?.indexOf(maxVal) ?? -1] || 'N/A';
-    el.innerHTML = `
-        <strong>key relationships</strong>  ·  top client <span class="highlight">${topClient}</span> accounts for ${topPct}% of volume  ·  peak order day is <span class="highlight">${peakDay}</span>  ·  overdue rate <span class="highlight">${s.overdue_rate}%</span>  ·  avg turnaround <span class="highlight">${s.avg_turnaround} days</span>
-    `;
-}
-
-// ---------- TABLE ----------
-function renderTable(data) {
-    const container = document.getElementById('tableContainer');
-    document.getElementById('rowCount').textContent = `${data.length} rows`;
-    if (!data.length) { container.innerHTML = '<p style="padding:20px;text-align:center;color:#6a8a9a;">no records</p>'; return; }
-
-    let html = `<table><thead><tr>
-        <th>ID</th><th>Order</th><th>Address</th><th>Client</th><th>Assigned</th><th>Due</th><th>Inspection</th><th>Item</th><th>Mail</th>
-    </tr></thead><tbody>`;
-    data.forEach(row => {
-        // Check overdue using the same format as backend
-        let isOverdue = false;
-        if (row.due) {
-            const parts = row.due.split('/');
-            if (parts.length === 3) {
-                const dueDate = new Date(parts[2], parts[0]-1, parts[1]);
-                isOverdue = dueDate < new Date();
-            }
+            renderKPI(stats);
+            renderInsights(stats);
+            renderTable(allData);
+            renderCharts(stats, allData);
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        } catch (err) {
+            document.getElementById('tableContainer').innerHTML = `<div class="error">⚠ ${err.message}</div>`;
+            console.error(err);
         }
-        const mailBadge = row.mail_sent == 1 ? '<span class="badge badge-sent">sent</span>' : '<span class="badge badge-pending">pending</span>';
-        html += `<tr${isOverdue ? ' class="overdue-row"' : ''}>
-            <td>${row.id}</td><td>${esc(row.order_id)}</td><td>${esc(row.address)}</td>
-            <td><strong>${esc(row.client)}</strong></td><td>${esc(row.assigned)}</td><td>${esc(row.due)}</td>
-            <td>${esc(row.inspection)}</td><td>${esc(row.item)}</td>
-            <td>${mailBadge}</td>
-        </tr>`;
-    });
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-function esc(t) { if (!t) return ''; return String(t).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m]); }
+    }
 
-// ---------- CHARTS ----------
-function renderCharts(stats, data) {
-    const colors = ['#00ffff', '#00ff88', '#ffcc00', '#ff6b6b', '#8a8aff'];
+    // ---------- KPI ----------
+    function renderKPI(s) {
+        const months = Object.keys(s.monthly || {});
+        const totalMonths = months.length || 1;
+        const avgPerMonth = (s.total / totalMonths).toFixed(1);
+        const years = new Set(months.map(m => m.split('-')[0]));
+        const avgPerYear = (s.total / (years.size || 1)).toFixed(1);
+        let avgPerDay = '—';
+        if (months.length > 0) {
+            const firstDate = new Date(months[0] + '-01');
+            const days = Math.max(1, (new Date() - firstDate) / (1000*60*60*24));
+            avgPerDay = (s.total / days).toFixed(1);
+        }
 
-    // 1. Daily orders (last 30 days)
-    const daily = {};
-    data.forEach(row => {
-        const d = row.created_at ? row.created_at.split(' ')[0] : null;
-        if (d) daily[d] = (daily[d] || 0) + 1;
-    });
-    const sortedDays = Object.keys(daily).sort();
-    const last30 = sortedDays.slice(-30);
-    const dailyData = last30.map(d => daily[d] || 0);
-    if (chartInstances.daily) chartInstances.daily.destroy();
-    chartInstances.daily = new Chart(document.getElementById('dailyChart'), {
-        type: 'bar',
-        data: { labels: last30.map(d => d.slice(5)), datasets: [{ label: 'orders', data: dailyData, backgroundColor: 'rgba(0,255,255,0.3)', borderColor: '#00ffff', borderWidth: 1 }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        const grid = document.getElementById('kpiGrid');
+        grid.innerHTML = `
+            <div class="kpi-card"><div class="value">${s.total}</div><div class="label">total orders</div></div>
+            <div class="kpi-card"><div class="value"><span class="accent">${s.mail_sent}</span></div><div class="label">mail sent</div></div>
+            <div class="kpi-card"><div class="value" style="color:#888;">${s.mail_pending}</div><div class="label">mail pending</div></div>
+            <div class="kpi-card"><div class="value" style="color:#ff3b30;">${s.overdue}</div><div class="label">overdue <span class="trend down">(${s.overdue_rate}%)</span></div></div>
+            <div class="kpi-card"><div class="value">${s.unique_clients}</div><div class="label">unique clients</div></div>
+            <div class="kpi-card"><div class="value">${s.avg_turnaround}</div><div class="label">avg turnaround (days)</div></div>
+            <div class="kpi-card"><div class="value">${avgPerDay}</div><div class="label">avg orders / day</div></div>
+            <div class="kpi-card"><div class="value">${avgPerMonth}</div><div class="label">avg orders / month</div></div>
+            <div class="kpi-card"><div class="value">${avgPerYear}</div><div class="label">avg orders / year</div></div>
+        `;
+    }
+
+    // ---------- INSIGHTS ----------
+    function renderInsights(s) {
+        const el = document.getElementById('insightText');
+        const topClient = Object.keys(s.top_clients || {})[0] || 'N/A';
+        const topPct = s.top_clients?.[topClient] ? Math.round((s.top_clients[topClient] / s.total) * 100) : 0;
+        const dowLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        const maxVal = Math.max(...(s.day_of_week || [0]));
+        const peakDay = dowLabels[s.day_of_week?.indexOf(maxVal) ?? -1] || 'N/A';
+        el.innerHTML = `
+            <strong>key relationships</strong>  ·  top client <span class="highlight">${topClient}</span> accounts for ${topPct}% of volume  ·  peak order day is <span class="highlight">${peakDay}</span>  ·  overdue rate <span class="highlight">${s.overdue_rate}%</span>  ·  avg turnaround <span class="highlight">${s.avg_turnaround} days</span>
+        `;
+    }
+
+    // ---------- TABLE ----------
+    function renderTable(data) {
+        const container = document.getElementById('tableContainer');
+        document.getElementById('rowCount').textContent = `${data.length} rows`;
+        if (!data.length) { container.innerHTML = '<p style="padding:20px;text-align:center;color:#666;">no records</p>'; return; }
+
+        let html = `<table><thead><tr>
+            <th>ID</th><th>Order</th><th>Address</th><th>Client</th><th>Assigned</th><th>Due</th><th>Inspection</th><th>Item</th><th>Mail</th>
+        </tr></thead><tbody>`;
+        data.forEach(row => {
+            let isOverdue = false;
+            if (row.due) {
+                const parts = row.due.split('/');
+                if (parts.length === 3) {
+                    const dueDate = new Date(parts[2], parts[0]-1, parts[1]);
+                    isOverdue = dueDate < new Date();
+                }
+            }
+            const mailBadge = row.mail_sent == 1 ? '<span class="badge badge-sent">sent</span>' : '<span class="badge badge-pending">pending</span>';
+            html += `<tr${isOverdue ? ' class="overdue-row"' : ''}>
+                <td>${row.id}</td><td>${esc(row.order_id)}</td><td>${esc(row.address)}</td>
+                <td><strong style="font-weight:400;">${esc(row.client)}</strong></td><td>${esc(row.assigned)}</td><td>${esc(row.due)}</td>
+                <td>${esc(row.inspection)}</td><td>${esc(row.item)}</td>
+                <td>${mailBadge}</td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+    function esc(t) { if (!t) return ''; return String(t).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m]); }
+
+    // ---------- CHARTS (monochrome + red) ----------
+    function renderCharts(stats, data) {
+        const grey = 'rgba(255,255,255,0.15)';
+        const red = 'rgba(255,59,48,0.6)';
+        const white = 'rgba(255,255,255,0.4)';
+
+        // 1. Daily
+        const daily = {};
+        data.forEach(row => {
+            const d = row.created_at ? row.created_at.split(' ')[0] : null;
+            if (d) daily[d] = (daily[d] || 0) + 1;
+        });
+        const sortedDays = Object.keys(daily).sort();
+        const last30 = sortedDays.slice(-30);
+        const dailyData = last30.map(d => daily[d] || 0);
+        if (chartInstances.daily) chartInstances.daily.destroy();
+        chartInstances.daily = new Chart(document.getElementById('dailyChart'), {
+            type: 'bar',
+            data: {
+                labels: last30.map(d => d.slice(5)),
+                datasets: [{
+                    label: 'orders',
+                    data: dailyData,
+                    backgroundColor: grey,
+                    borderColor: 'rgba(255,255,255,0.2)',
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+
+        // 2. Monthly
+        const months = Object.keys(stats.monthly || {});
+        const monthData = Object.values(stats.monthly || {});
+        if (chartInstances.month) chartInstances.month.destroy();
+        chartInstances.month = new Chart(document.getElementById('monthChart'), {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'orders',
+                    data: monthData,
+                    borderColor: '#ff3b30',
+                    tension: 0.3,
+                    fill: false,
+                    pointRadius: 2,
+                    pointBackgroundColor: '#ff3b30'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+
+        // 3. Yearly
+        const years = {};
+        Object.entries(stats.monthly || {}).forEach(([m, count]) => {
+            const y = m.split('-')[0];
+            years[y] = (years[y] || 0) + count;
+        });
+        const yearLabels = Object.keys(years);
+        const yearData = Object.values(years);
+        if (chartInstances.year) chartInstances.year.destroy();
+        chartInstances.year = new Chart(document.getElementById('yearChart'), {
+            type: 'bar',
+            data: {
+                labels: yearLabels,
+                datasets: [{
+                    label: 'orders',
+                    data: yearData,
+                    backgroundColor: grey,
+                    borderColor: white,
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+
+        // 4. Top clients
+        const clientLabels = Object.keys(stats.top_clients || {}).slice(0, 5);
+        const clientData = clientLabels.map(c => stats.top_clients[c]);
+        if (chartInstances.topClients) chartInstances.topClients.destroy();
+        chartInstances.topClients = new Chart(document.getElementById('topClientChart'), {
+            type: 'bar',
+            data: {
+                labels: clientLabels,
+                datasets: [{
+                    label: 'orders',
+                    data: clientData,
+                    backgroundColor: grey,
+                    borderColor: white,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 5. State distribution
+        const stateLabels = Object.keys(stats.states || {}).slice(0, 8);
+        const stateData = stateLabels.map(s => stats.states[s]);
+        if (chartInstances.state) chartInstances.state.destroy();
+        chartInstances.state = new Chart(document.getElementById('stateChart'), {
+            type: 'bar',
+            data: {
+                labels: stateLabels,
+                datasets: [{
+                    label: 'orders',
+                    data: stateData,
+                    backgroundColor: grey,
+                    borderColor: white,
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+    }
+
+    // ---------- SEARCH ----------
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const term = this.value.toLowerCase().trim();
+        if (!term) return renderTable(allData);
+        const filtered = allData.filter(r =>
+            (r.order_id && r.order_id.toLowerCase().includes(term)) ||
+            (r.address && r.address.toLowerCase().includes(term)) ||
+            (r.client && r.client.toLowerCase().includes(term)) ||
+            (r.item && r.item.toLowerCase().includes(term))
+        );
+        renderTable(filtered);
     });
 
-    // 2. Monthly trend
-    const months = Object.keys(stats.monthly || {});
-    const monthData = Object.values(stats.monthly || {});
-    if (chartInstances.month) chartInstances.month.destroy();
-    chartInstances.month = new Chart(document.getElementById('monthChart'), {
-        type: 'line',
-        data: { labels: months, datasets: [{ label: 'orders', data: monthData, borderColor: '#00ff88', tension: 0.3, fill: false }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-
-    // 3. Yearly overview
-    const years = {};
-    Object.entries(stats.monthly || {}).forEach(([m, count]) => {
-        const y = m.split('-')[0];
-        years[y] = (years[y] || 0) + count;
-    });
-    const yearLabels = Object.keys(years);
-    const yearData = Object.values(years);
-    if (chartInstances.year) chartInstances.year.destroy();
-    chartInstances.year = new Chart(document.getElementById('yearChart'), {
-        type: 'bar',
-        data: { labels: yearLabels, datasets: [{ label: 'orders', data: yearData, backgroundColor: 'rgba(0,255,255,0.2)', borderColor: '#00ffff' }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-
-    // 4. Top clients
-    const clientLabels = Object.keys(stats.top_clients || {}).slice(0, 5);
-    const clientData = clientLabels.map(c => stats.top_clients[c]);
-    if (chartInstances.topClients) chartInstances.topClients.destroy();
-    chartInstances.topClients = new Chart(document.getElementById('topClientChart'), {
-        type: 'bar',
-        data: { labels: clientLabels, datasets: [{ label: 'orders', data: clientData, backgroundColor: 'rgba(0,255,136,0.3)', borderColor: '#00ff88' }] },
-        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-
-    // 5. State distribution
-    const stateLabels = Object.keys(stats.states || {}).slice(0, 8);
-    const stateData = stateLabels.map(s => stats.states[s]);
-    if (chartInstances.state) chartInstances.state.destroy();
-    chartInstances.state = new Chart(document.getElementById('stateChart'), {
-        type: 'bar',
-        data: { labels: stateLabels, datasets: [{ label: 'orders', data: stateData, backgroundColor: 'rgba(138,138,255,0.3)', borderColor: '#8a8aff' }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-}
-
-// ---------- SEARCH ----------
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    const term = this.value.toLowerCase().trim();
-    if (!term) return renderTable(allData);
-    const filtered = allData.filter(r => 
-        (r.order_id && r.order_id.toLowerCase().includes(term)) ||
-        (r.address && r.address.toLowerCase().includes(term)) ||
-        (r.client && r.client.toLowerCase().includes(term)) ||
-        (r.item && r.item.toLowerCase().includes(term))
-    );
-    renderTable(filtered);
-});
-
-// ---------- AUTO REFRESH (60s) ----------
-setInterval(fetchData, 60000);
-fetchData();
+    // ---------- AUTO REFRESH ----------
+    setInterval(fetchData, 60000);
+    fetchData();
 </script>
 </body>
 </html>
