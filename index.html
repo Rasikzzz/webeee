@@ -329,8 +329,12 @@ let chartInstances = {};
 async function fetchData() {
     document.getElementById('tableContainer').innerHTML = '<div class="loading">loading…</div>';
     try {
-        // Use your live backend URL
-        const response = await fetch('https://insights.bpoautoaccept.com/will_api.php');
+        // ===== CHANGE THIS URL IF NEEDED =====
+        // If you host the frontend on the same subdomain, use: 'api.php'
+        // If you host on GitHub Pages, use the full URL:
+        const response = await fetch('https://insights.bpoautoaccept.com/api.php');
+        // =====================================
+
         if (!response.ok) throw new Error('Network error');
         const result = await response.json();
         if (result.status !== 'success') throw new Error(result.message);
@@ -351,13 +355,19 @@ async function fetchData() {
 
 // ---------- KPI ----------
 function renderKPI(s) {
-    // Compute averages
-    const totalDays = (new Date() - new Date(s.monthly?.[0] || Date.now())) / (1000*60*60*24) || 1;
-    const avgPerDay = (s.total / totalDays).toFixed(1);
-    const totalMonths = Object.keys(s.monthly || {}).length || 1;
+    // Compute averages from monthly data
+    const months = Object.keys(s.monthly || {});
+    const totalMonths = months.length || 1;
     const avgPerMonth = (s.total / totalMonths).toFixed(1);
-    const years = new Set(Object.keys(s.monthly || {}).map(m => m.split('-')[0]));
+    const years = new Set(months.map(m => m.split('-')[0]));
     const avgPerYear = (s.total / (years.size || 1)).toFixed(1);
+    // Average per day: estimate days from first month to now
+    let avgPerDay = '--';
+    if (months.length > 0) {
+        const firstDate = new Date(months[0] + '-01');
+        const days = Math.max(1, (new Date() - firstDate) / (1000*60*60*24));
+        avgPerDay = (s.total / days).toFixed(1);
+    }
 
     const grid = document.getElementById('kpiGrid');
     grid.innerHTML = `
@@ -378,7 +388,9 @@ function renderInsights(s) {
     const el = document.getElementById('insightText');
     const topClient = Object.keys(s.top_clients || {})[0] || 'N/A';
     const topPct = s.top_clients?.[topClient] ? Math.round((s.top_clients[topClient] / s.total) * 100) : 0;
-    const peakDay = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][s.day_of_week?.indexOf(Math.max(...(s.day_of_week || [0])))] || 'N/A';
+    const dowLabels = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    const maxVal = Math.max(...(s.day_of_week || [0]));
+    const peakDay = dowLabels[s.day_of_week?.indexOf(maxVal) ?? -1] || 'N/A';
     el.innerHTML = `
         <strong>key relationships</strong>  ·  top client <span class="highlight">${topClient}</span> accounts for ${topPct}% of volume  ·  peak order day is <span class="highlight">${peakDay}</span>  ·  overdue rate <span class="highlight">${s.overdue_rate}%</span>  ·  avg turnaround <span class="highlight">${s.avg_turnaround} days</span>
     `;
@@ -394,13 +406,21 @@ function renderTable(data) {
         <th>ID</th><th>Order</th><th>Address</th><th>Client</th><th>Assigned</th><th>Due</th><th>Inspection</th><th>Item</th><th>Mail</th>
     </tr></thead><tbody>`;
     data.forEach(row => {
-        const dueDate = row.due ? new Date(row.due) : null;
-        const isOverdue = dueDate && dueDate < new Date();
+        // Check overdue using the same format as backend
+        let isOverdue = false;
+        if (row.due) {
+            const parts = row.due.split('/');
+            if (parts.length === 3) {
+                const dueDate = new Date(parts[2], parts[0]-1, parts[1]);
+                isOverdue = dueDate < new Date();
+            }
+        }
         const mailBadge = row.mail_sent == 1 ? '<span class="badge badge-sent">sent</span>' : '<span class="badge badge-pending">pending</span>';
         html += `<tr${isOverdue ? ' class="overdue-row"' : ''}>
             <td>${row.id}</td><td>${esc(row.order_id)}</td><td>${esc(row.address)}</td>
             <td><strong>${esc(row.client)}</strong></td><td>${esc(row.assigned)}</td><td>${esc(row.due)}</td>
-            <td>${esc(row.inspection)}</td><td>${esc(row.item)}</td><td>${mailBadge}</td>
+            <td>${esc(row.inspection)}</td><td>${esc(row.item)}</td>
+            <td>${mailBadge}</td>
         </tr>`;
     });
     html += `</tbody></table>`;
