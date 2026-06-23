@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>william · bright</title>
+    <title>william · nothing dark</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* ---------- RESET & BASE ---------- */
@@ -14,8 +14,8 @@
         }
 
         body {
-            background: #ffffff;
-            color: #1a1a1a;
+            background: #0d0d0d;
+            color: #f0f0f0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-weight: 300;
             padding: 28px 24px;
@@ -30,13 +30,15 @@
             margin: 0 auto;
         }
 
-        /* ---------- CARDS (light & crisp) ---------- */
+        /* ---------- GLASS CARDS (dark) ---------- */
         .card {
-            background: #ffffff;
-            border: 1px solid #eaeef2;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             padding: 20px 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
 
         /* ---------- HEADER ---------- */
@@ -48,7 +50,7 @@
             gap: 16px;
             margin-bottom: 32px;
             padding-bottom: 16px;
-            border-bottom: 1px solid #eaeef2;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .header-left {
@@ -61,12 +63,12 @@
             font-weight: 300;
             font-size: 2rem;
             letter-spacing: -0.02em;
-            color: #1a1a1a;
+            color: #ffffff;
         }
 
         .header-left h1 span {
             font-weight: 500;
-            color: #4a90d9; /* soft blue */
+            color: #ff3b30; /* Nothing red */
         }
 
         .header-left .live {
@@ -76,13 +78,16 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            color: #888;
+            color: #aaa;
+            background: rgba(255, 59, 48, 0.15);
+            padding: 4px 12px;
+            border-radius: 40px;
         }
 
         .header-left .live .dot {
             width: 8px;
             height: 8px;
-            background: #4a90d9;
+            background: #ff3b30;
             border-radius: 50%;
             animation: pulse 1.8s ease-in-out infinite;
         }
@@ -97,17 +102,17 @@
             align-items: center;
             gap: 18px;
             font-size: 0.8rem;
-            color: #666;
+            color: #aaa;
         }
 
         .header-right .update-time {
-            color: #999;
+            color: #888;
         }
 
         .btn-refresh {
             background: transparent;
-            border: 1px solid #d0d7dd;
-            color: #444;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ddd;
             padding: 6px 16px;
             border-radius: 40px;
             cursor: pointer;
@@ -117,30 +122,31 @@
         }
 
         .btn-refresh:hover {
-            background: #f5f7fa;
-            border-color: #b0b8c0;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         /* ---------- INSIGHTS BANNER ---------- */
         .insights {
-            background: #f8faff;
-            border-left: 3px solid #4a90d9;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #ff3b30;
             padding: 14px 22px;
             border-radius: 16px;
             margin-bottom: 30px;
-            font-size: 0.9rem;
-            color: #444;
+            font-size: 0.95rem;
+            color: #ccc;
             line-height: 1.6;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .insights strong {
-            color: #1a1a1a;
-            font-weight: 400;
+            color: #ffffff;
+            font-weight: 500;
         }
 
         .insights .highlight {
-            color: #4a90d9;
-            font-weight: 400;
+            color: #ff6b6b; /* brighter red for visibility */
+            font-weight: 500;
         }
 
         /* ---------- KPI GRID ---------- */
@@ -152,40 +158,42 @@
         }
 
         .kpi-card {
-            background: #ffffff;
-            border: 1px solid #eaeef2;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 20px;
             padding: 18px 16px 14px;
             transition: 0.2s;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .kpi-card:hover {
-            border-color: #c0cbd6;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .kpi-card .value {
             font-size: 2rem;
-            font-weight: 300;
+            font-weight: 400;
             letter-spacing: -0.02em;
-            color: #1a1a1a;
+            color: #ffffff;
             line-height: 1.2;
         }
 
         .kpi-card .value .accent {
-            color: #4a90d9;
+            color: #ff6b6b; /* brighter */
         }
 
         .kpi-card .value .muted {
-            color: #999;
+            color: #888;
         }
 
         .kpi-card .label {
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            color: #888;
+            color: #aaa;
             margin-top: 6px;
         }
 
@@ -194,8 +202,8 @@
             margin-left: 4px;
         }
 
-        .trend.up { color: #2e7d32; }
-        .trend.down { color: #e67e22; } /* soft orange instead of red */
+        .trend.up { color: #34c759; }
+        .trend.down { color: #ff6b6b; }
 
         /* ---------- CHART GRID ---------- */
         .chart-grid {
@@ -206,21 +214,23 @@
         }
 
         .chart-card {
-            background: #ffffff;
-            border: 1px solid #eaeef2;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 24px;
             padding: 18px 20px 14px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .chart-card h3 {
-            font-weight: 300;
+            font-weight: 400;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            color: #777;
+            color: #aaa;
             margin-bottom: 10px;
-            border-bottom: 1px solid #eaeef2;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding-bottom: 8px;
         }
 
@@ -231,13 +241,15 @@
 
         /* ---------- TABLE ---------- */
         .table-wrapper {
-            background: #ffffff;
-            border: 1px solid #eaeef2;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 24px;
             padding: 18px 20px 14px;
             margin-top: 8px;
             overflow-x: auto;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .table-toolbar {
@@ -249,11 +261,11 @@
         }
 
         .table-toolbar input {
-            background: #f8fafc;
-            border: 1px solid #d0d7dd;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 40px;
             padding: 8px 18px;
-            color: #1a1a1a;
+            color: #f0f0f0;
             font-size: 0.8rem;
             width: 260px;
             outline: none;
@@ -262,9 +274,9 @@
         }
 
         .table-toolbar input:focus {
-            border-color: #4a90d9;
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.1);
+            border-color: #ff3b30;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.15);
         }
 
         .table-toolbar .row-count {
@@ -284,8 +296,8 @@
         th {
             text-align: left;
             padding: 12px 6px 8px;
-            border-bottom: 1px solid #eaeef2;
-            color: #888;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: #aaa;
             font-weight: 400;
             text-transform: uppercase;
             font-size: 0.6rem;
@@ -294,12 +306,12 @@
 
         td {
             padding: 10px 6px;
-            border-bottom: 1px solid #f0f2f5;
-            color: #333;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #ddd;
         }
 
         tr:hover td {
-            background: #f8faff;
+            background: rgba(255, 59, 48, 0.05);
         }
 
         .badge {
@@ -313,29 +325,29 @@
         }
 
         .badge-sent {
-            background: rgba(46, 125, 50, 0.10);
-            color: #2e7d32;
+            background: rgba(52, 199, 89, 0.15);
+            color: #34c759;
         }
 
         .badge-pending {
-            background: rgba(0, 0, 0, 0.04);
-            color: #888;
+            background: rgba(255, 255, 255, 0.05);
+            color: #aaa;
         }
 
         .overdue-row td {
-            border-left: 3px solid #e67e22; /* soft orange */
+            border-left: 3px solid #ff3b30;
         }
 
         .loading,
         .error {
             padding: 48px;
             text-align: center;
-            color: #999;
+            color: #888;
             font-weight: 300;
         }
 
         .error {
-            color: #e67e22;
+            color: #ff6b6b;
         }
 
         /* ---------- RESPONSIVE ---------- */
@@ -399,7 +411,6 @@
     async function fetchData() {
         document.getElementById('tableContainer').innerHTML = '<div class="loading">loading…</div>';
         try {
-            // Use your live backend URL
             const response = await fetch('https://insights.bpoautoaccept.com/api.php');
             if (!response.ok) throw new Error('Network error');
             const result = await response.json();
@@ -437,8 +448,8 @@
         grid.innerHTML = `
             <div class="kpi-card"><div class="value">${s.total}</div><div class="label">total orders</div></div>
             <div class="kpi-card"><div class="value"><span class="accent">${s.mail_sent}</span></div><div class="label">mail sent</div></div>
-            <div class="kpi-card"><div class="value" style="color:#999;">${s.mail_pending}</div><div class="label">mail pending</div></div>
-            <div class="kpi-card"><div class="value" style="color:#e67e22;">${s.overdue}</div><div class="label">overdue <span class="trend down">(${s.overdue_rate}%)</span></div></div>
+            <div class="kpi-card"><div class="value" style="color:#aaa;">${s.mail_pending}</div><div class="label">mail pending</div></div>
+            <div class="kpi-card"><div class="value" style="color:#ff6b6b;">${s.overdue}</div><div class="label">overdue <span class="trend down">(${s.overdue_rate}%)</span></div></div>
             <div class="kpi-card"><div class="value">${s.unique_clients}</div><div class="label">unique clients</div></div>
             <div class="kpi-card"><div class="value">${s.avg_turnaround}</div><div class="label">avg turnaround (days)</div></div>
             <div class="kpi-card"><div class="value">${avgPerDay}</div><div class="label">avg orders / day</div></div>
@@ -464,7 +475,7 @@
     function renderTable(data) {
         const container = document.getElementById('tableContainer');
         document.getElementById('rowCount').textContent = `${data.length} rows`;
-        if (!data.length) { container.innerHTML = '<p style="padding:20px;text-align:center;color:#999;">no records</p>'; return; }
+        if (!data.length) { container.innerHTML = '<p style="padding:20px;text-align:center;color:#888;">no records</p>'; return; }
 
         let html = `<table><thead><tr>
             <th>ID</th><th>Order</th><th>Address</th><th>Client</th><th>Assigned</th><th>Due</th><th>Inspection</th><th>Item</th><th>Mail</th>
@@ -491,11 +502,11 @@
     }
     function esc(t) { if (!t) return ''; return String(t).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m]); }
 
-    // ---------- CHARTS (bright with blue accent) ----------
+    // ---------- CHARTS (dark with bright red and high contrast) ----------
     function renderCharts(stats, data) {
-        const lightGrey = 'rgba(0,0,0,0.06)';
-        const blue = '#4a90d9';
-        const blueLight = 'rgba(74,144,217,0.2)';
+        const grey = 'rgba(255,255,255,0.08)';
+        const red = '#ff3b30';
+        const redLight = 'rgba(255,59,48,0.2)';
 
         // 1. Daily
         const daily = {};
@@ -514,15 +525,15 @@
                 datasets: [{
                     label: 'orders',
                     data: dailyData,
-                    backgroundColor: lightGrey,
-                    borderColor: '#d0d7dd',
+                    backgroundColor: grey,
+                    borderColor: 'rgba(255,255,255,0.2)',
                     borderWidth: 1
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
-        // 2. Monthly (blue line)
+        // 2. Monthly (bright red line)
         const months = Object.keys(stats.monthly || {});
         const monthData = Object.values(stats.monthly || {});
         if (chartInstances.month) chartInstances.month.destroy();
@@ -533,11 +544,13 @@
                 datasets: [{
                     label: 'orders',
                     data: monthData,
-                    borderColor: blue,
+                    borderColor: red,
                     tension: 0.3,
                     fill: false,
-                    pointRadius: 2,
-                    pointBackgroundColor: blue
+                    pointRadius: 4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: red,
+                    pointBorderWidth: 2
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
@@ -559,15 +572,15 @@
                 datasets: [{
                     label: 'orders',
                     data: yearData,
-                    backgroundColor: lightGrey,
-                    borderColor: '#d0d7dd',
+                    backgroundColor: grey,
+                    borderColor: 'rgba(255,255,255,0.2)',
                     borderWidth: 1
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
-        // 4. Top clients
+        // 4. Top clients (red border bars)
         const clientLabels = Object.keys(stats.top_clients || {}).slice(0, 5);
         const clientData = clientLabels.map(c => stats.top_clients[c]);
         if (chartInstances.topClients) chartInstances.topClients.destroy();
@@ -578,9 +591,9 @@
                 datasets: [{
                     label: 'orders',
                     data: clientData,
-                    backgroundColor: lightGrey,
-                    borderColor: '#d0d7dd',
-                    borderWidth: 1
+                    backgroundColor: grey,
+                    borderColor: red,
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -602,8 +615,8 @@
                 datasets: [{
                     label: 'orders',
                     data: stateData,
-                    backgroundColor: lightGrey,
-                    borderColor: '#d0d7dd',
+                    backgroundColor: grey,
+                    borderColor: 'rgba(255,255,255,0.2)',
                     borderWidth: 1
                 }]
             },
